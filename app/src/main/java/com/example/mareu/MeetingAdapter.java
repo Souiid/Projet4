@@ -54,6 +54,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             imageView = itemView.findViewById(R.id.imageView);
             participantsTV =  itemView.findViewById(R.id.participantsTV);
             addColors();
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        // Assurez-vous que la position est toujours valide
+                        itemClickListener.onClick(view);
+                    }
+                }
+            });
         }
     }
     @NonNull
@@ -93,6 +104,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     @Override
     public int getItemCount() {
         return meetings.size();
+    }
+
+    public void removeMeeting(int position) {
+        if (position >= 0 && position < meetings.size()) {
+            meetings.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, getItemCount());
+
+        }
     }
 
 }

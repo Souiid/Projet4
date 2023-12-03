@@ -17,17 +17,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ActivityMainBinding binding;
     List<Meeting> meetings = new ArrayList<>();
+    MeetingAdapter adapter = new MeetingAdapter(meetings, this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         generateMeetings();
-
         RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        MeetingAdapter adapter = new MeetingAdapter(meetings, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -70,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Object tagObject = view.getTag();
 
+        if (tagObject instanceof Integer) {
+            int position = (int) tagObject;
+            adapter.removeMeeting(position);
+        }
     }
 }
