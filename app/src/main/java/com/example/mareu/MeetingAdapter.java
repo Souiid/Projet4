@@ -101,6 +101,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         holder.cardView.setOnClickListener(itemClickListener);
     }
 
+    public void setMeetings(List<Meeting> meetings) {
+        this.meetings = meetings;
+    }
+
     @Override
     public int getItemCount() {
         return meetings.size();
