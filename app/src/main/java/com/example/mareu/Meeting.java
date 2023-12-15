@@ -17,4 +17,16 @@ public class Meeting implements Serializable {
         this.participants = participants;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
 }

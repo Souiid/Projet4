@@ -5,14 +5,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.mareu.databinding.ActivityMainBinding;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActivityMainBinding binding;
     List<Meeting> meetings = new ArrayList<>();
     MeetingAdapter adapter = new MeetingAdapter(meetings, this);
+
+    Integer tapOnSort = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         clickOnAddButton();
+        clickOnSortButton();
     }
 
     private void clickOnAddButton() {
@@ -77,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         meetings.add(meeting1);
         meetings.add(meeting2);
         meetings.add(meeting3);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
+        }
+
     }
 
     private List<String> generateParticipants(String mail1, String mail2, String mail3) {
@@ -85,6 +96,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         participants.add(mail2);
         participants.add(mail3);
         return participants;
+    }
+
+    private void clickOnSortButton() {
+        binding.sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                   if (tapOnSort == 0) {
+                       Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
+                       showToast("Triage par date");
+                       tapOnSort += 1;
+                   } else if (tapOnSort == 1) {
+                       Collections.sort(meetings, Comparator.comparing(Meeting::getPlace));
+                       showToast("Triage par salle");
+                       tapOnSort += 1;
+                   } else if (tapOnSort == 2) {
+                       Collections.sort(meetings, Comparator.comparing(Meeting::getTopic));
+                       showToast("Triage par sujet");
+                       tapOnSort = 0;
+                   }
+                    adapter.setMeetings(meetings);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void showToast(String title) {
+        Toast.makeText(getApplicationContext(), title, Toast.LENGTH_SHORT).show();
     }
 
     @Override
