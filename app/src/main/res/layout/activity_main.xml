@@ -22,7 +22,7 @@
             android:layout_weight="9"
             android:layout_height="wrap_content"
             android:text="Ma réu"
-            android:textSize="20sp"
+            android:textSize="@dimen/size_title_bar"
             android:layout_marginStart="20dp"
             android:textColor="@color/white"
             android:textStyle="bold"/>
@@ -43,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/actionBar"
+        android:layout_above="@id/addButton"
         android:layout_marginTop="30dp"
         android:background="@color/white"/>
 
