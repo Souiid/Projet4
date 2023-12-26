@@ -7,4 +7,10 @@
     <color name="lightGray">#E4E4E4</color>
     <color name="blue">#338CFA</color>
     <color name="darkBlue">#0863D3</color>
+    <color name="purple">#8800FF</color>
+    <color name="pink">#FF00DD</color>
+    <color name="green">#09E41F</color>
+    <color name="yellow">#FAF600</color>
+    <color name="orange">#FA5800</color>
+
 </resources>

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -22,19 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder>{
 
     private List<Meeting> meetings;
     private View.OnClickListener itemClickListener;
-    private List<Integer> colorList = new ArrayList<>();
 
-    private void addColors() {
-        colorList.add(Color.RED);
-        colorList.add(Color.GREEN);
-        colorList.add(Color.BLUE);
-    }
     public MeetingAdapter(List<Meeting> meetings, View.OnClickListener itemClickListener) {
         this.meetings = meetings;
         this.itemClickListener = itemClickListener;
@@ -45,6 +41,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         ImageView imageView;
         TextView infosTV;
         TextView participantsTV;
+        private Context context;
 
 
         public ViewHolder(View itemView) {
@@ -53,14 +50,13 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             infosTV = itemView.findViewById(R.id.infosTV);
             imageView = itemView.findViewById(R.id.imageView);
             participantsTV =  itemView.findViewById(R.id.participantsTV);
-            addColors();
+            context = itemView.getContext();
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        // Assurez-vous que la position est toujours valide
                         itemClickListener.onClick(view);
                     }
                 }
@@ -87,12 +83,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         String place = meeting.place;
 
         String participantsString = TextUtils.join(", ", meeting.participants);
-        Random random = new Random();
-        int randomIndex = random.nextInt(colorList.size());
-        int randomColor = colorList.get(randomIndex);
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setShape(GradientDrawable.OVAL);
-        gradientDrawable.setColor(randomColor);
+        gradientDrawable.setColor(ContextCompat.getColor(holder.context, setColorByPlace(place)));
         holder.imageView.setBackground(gradientDrawable);
         holder.infosTV.setText(place + "-" + hour + "-" + topic);
         holder.participantsTV.setText(participantsString);
@@ -119,4 +112,43 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         }
     }
 
+    @SuppressLint("ResourceAsColor")
+    private int setColorByPlace(String place) {
+        int color = Color.RED;
+
+        switch (place) {
+            case "Mario":
+                color = R.color.red;
+                break;
+            case "Luigi":
+                color = R.color.green;
+                break;
+            case "Waluigi":
+                color = R.color.purple;
+                break;
+            case "Wario":
+                color = R.color.yellow;
+                break;
+            case "Bowser":
+                color = R.color.black;
+                break;
+            case "Peach":
+                color = R.color.pink;
+                break;
+            case "Daisy":
+                color = R.color.blue;
+                break;
+            case "Yoshi":
+                color = R.color.lightGray;
+                break;
+            case "Donkey kong":
+                color = R.color.darkBlue;
+                break;
+            case "Toad":
+                color = R.color.orange;
+                break;
+        }
+
+        return color;
+    }
 }

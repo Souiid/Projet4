@@ -1,6 +1,7 @@
 package com.example.mareu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.mareu.databinding.ActivityMainBinding;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,19 +28,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActivityMainBinding binding;
     List<Meeting> meetings = new ArrayList<>();
     MeetingAdapter adapter = new MeetingAdapter(meetings, this);
-
     Integer tapOnSort = 0;
+
+    ViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.menuLinearLayout.setVisibility(View.INVISIBLE);
         generateMeetings();
         RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         clickOnAddButton();
         clickOnSortButton();
+        clickOnSortByDateButton();
+        clickOnSortPlaceButton();
+        clickOnSortByTopicButton();
+     //   viewModel = new ViewModelProvider(//        ViewModelProvider.AndroidViewModelFactory.getInstance().create(MainViewModel.class);
+
     }
 
     @Override
@@ -105,24 +115,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return participants;
     }
 
-    private void clickOnSortButton() {
-        binding.sortButton.setOnClickListener(new View.OnClickListener() {
+
+    private void clickOnSortByDateButton() {
+        binding.sortByDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                   if (tapOnSort == 0) {
-                       Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
-                       showToast("Triage par date");
-                       tapOnSort += 1;
-                   } else if (tapOnSort == 1) {
-                       Collections.sort(meetings, Comparator.comparing(Meeting::getPlace));
-                       showToast("Triage par salle");
-                       tapOnSort += 1;
-                   } else if (tapOnSort == 2) {
-                       Collections.sort(meetings, Comparator.comparing(Meeting::getTopic));
-                       showToast("Triage par sujet");
-                       tapOnSort = 0;
-                   }
+                    Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
+                    binding.menuLinearLayout.setVisibility(View.INVISIBLE);
                     adapter.setMeetings(meetings);
                     adapter.notifyDataSetChanged();
                 }
@@ -130,8 +130,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void showToast(String title) {
-        Toast.makeText(getApplicationContext(), title, Toast.LENGTH_SHORT).show();
+    private void clickOnSortPlaceButton() {
+        binding.sortByPlaceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Collections.sort(meetings, Comparator.comparing(Meeting::getPlace));
+                    binding.menuLinearLayout.setVisibility(View.INVISIBLE);
+                    adapter.setMeetings(meetings);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void clickOnSortByTopicButton() {
+        binding.sortByTopicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Collections.sort(meetings, Comparator.comparing(Meeting::getTopic));
+                    binding.menuLinearLayout.setVisibility(View.INVISIBLE);
+                    adapter.setMeetings(meetings);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void clickOnSortButton() {
+        binding.sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    assert binding.menuLinearLayout != null;
+                    if (binding.menuLinearLayout.getVisibility() == View.INVISIBLE) {
+                        binding.menuLinearLayout.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.menuLinearLayout.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -143,4 +183,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             adapter.removeMeeting(position);
         }
     }
+
 }

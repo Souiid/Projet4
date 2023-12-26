@@ -7,45 +7,91 @@
     tools:context=".MainActivity"
     android:background="@color/white">
 
-    <LinearLayout
-        android:id="@+id/actionBar"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/blue"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:weightSum="10">
+        android:elevation="4dp">
 
+        <!-- Titre de la Toolbar -->
         <TextView
-            android:id="@+id/actionBarTitle"
-            android:layout_width="0dp"
-            android:layout_weight="9"
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ma réu"
-            android:textSize="@dimen/size_title_bar"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/white"
+            android:text="MaReu"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
+        <!-- Bouton de la Toolbar -->
         <ImageButton
             android:id="@+id/sortButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
             android:src="@drawable/ic_sort"
-            android:background="@color/blue"
-            app:tint="@color/white"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"/>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/actionBar"
+        android:layout_below="@+id/toolbar"
         android:layout_above="@id/addButton"
         android:layout_marginTop="30dp"
         android:background="@color/white"/>
+
+
+    <LinearLayout
+        android:id="@+id/menuLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/toolbar"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trier par: "
+            android:textColor="@color/blue"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/sortByDateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:textColor="@color/blue"
+            android:text="Date"
+            android:textSize="16sp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/sortByPlaceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:textColor="@color/blue"
+            android:text="Salle"
+            android:textSize="16sp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/sortByTopicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:textColor="@color/blue"
+            android:text="Sujet"
+            android:textSize="16sp"
+            android:textAllCaps="false"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/addButton"
