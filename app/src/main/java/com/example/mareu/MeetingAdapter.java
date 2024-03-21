@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
@@ -78,7 +79,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         Meeting meeting = meetings.get(position);
         String topic = meeting.topic;
         Date date = meeting.date;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy 'à' HH'h'mm", Locale.FRENCH);
         String hour = dateFormat.format(date);
         String place = meeting.place;
 
@@ -113,7 +114,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
     @SuppressLint("ResourceAsColor")
     private int setColorByPlace(String place) {
-        int color = Color.RED;
+        int color;
 
         switch (place) {
             case "Mario":
@@ -140,12 +141,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             case "Yoshi":
                 color = R.color.lightGray;
                 break;
-            case "Donkey kong":
+            case "Donkey Kong":
                 color = R.color.darkBlue;
                 break;
             case "Toad":
                 color = R.color.orange;
                 break;
+            default:
+                color = R.color.red;
         }
 
         return color;

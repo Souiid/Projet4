@@ -33,6 +33,7 @@
         android:layout_marginBottom="20dp"
         android:paddingStart="10dp"
         android:maxLines="1"
+        android:textColor="@color/black"
         android:inputType="text"/>
 
     <EditText
@@ -116,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/chooseDateButton"
         android:text="Valider la réunion"
-        android:background="@color/red"
+        android:background="@color/green"
         android:textColor="@color/white"
         android:layout_marginTop="16dp" />
 

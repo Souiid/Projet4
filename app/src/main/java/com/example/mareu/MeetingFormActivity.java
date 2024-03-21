@@ -89,6 +89,7 @@ public class MeetingFormActivity extends AppCompatActivity {
                     }else {
                         participants.add(participantMail);
                         binding.participantsTV.append("\n -" + participantMail);
+                        binding.participantET.setText("");
                     }
                 }else {
                     Toast.makeText(MeetingFormActivity.this, "Vous ne pouvez pas entrer plus de participants", Toast.LENGTH_SHORT).show();
