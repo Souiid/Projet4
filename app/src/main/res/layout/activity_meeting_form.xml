@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MeetingFormActivity"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter une réunion"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:id="@+id/topicET"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:hint="Sujet"
+        android:textColorHint="@color/gray"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginTop="24dp"
+        android:background="@color/lightGray"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:paddingStart="10dp"
+        android:maxLines="1"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/participantET"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topicET"
+        android:layout_alignTop="@id/addParticipantButton"
+        android:layout_alignBottom="@id/addParticipantButton"
+        android:textSize="15sp"
+        android:layout_toLeftOf="@+id/addParticipantButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/addParticipantButton"
+        android:hint="Entrer un mail"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
+        android:background="@color/lightGray"
+        android:layout_marginStart="20dp"
+        android:paddingStart="10dp"
+        android:maxLines="1"
+        android:inputType="textEmailAddress"/>
+
+    <Button
+        android:id="@+id/addParticipantButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topicET"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="+"
+        android:background="@color/blue"
+        android:layout_marginEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/participantsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addParticipantButton"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/chooseRoomTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choisir une salle"
+        android:layout_below="@id/participantsTV"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/chooseRoomTV"
+        android:text="Choisir une salle"
+        android:background="@color/blue"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/chooseDateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:text="Choisir une date"
+        android:background="@color/blue"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp" />
+
+
+    <Button
+        android:id="@+id/validateMeetingButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chooseDateButton"
+        android:text="Valider la réunion"
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+</RelativeLayout>

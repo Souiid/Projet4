@@ -108,7 +108,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             meetings.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, getItemCount());
-
         }
     }
 

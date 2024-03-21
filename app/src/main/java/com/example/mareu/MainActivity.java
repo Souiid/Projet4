@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+      //  getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
 
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            // Les données sont renvoyées depuis l'activité B
             if (data != null && data.hasExtra("newMeeting")) { // Utilisez "newMeeting" ici
                 Meeting meeting = (Meeting) data.getSerializableExtra("newMeeting"); // Utilisez "newMeeting" ici
                 Log.d("Meeting", meeting.place);
