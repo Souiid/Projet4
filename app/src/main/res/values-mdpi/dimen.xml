@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="toolbar_title_size">12sp</dimen>
+    <dimen name="sort_button_text_size">10.67sp</dimen>
+    <dimen name="sort_button_height">20dp</dimen>
+    <dimen name="add_button_size">33.33dp</dimen>
+    <dimen name="add_button_text_size">16.67sp</dimen>
+    <dimen name="cell_height">53.33dp</dimen>
+    <dimen name="cell_image_size">26.67dp</dimen>
+    <dimen name="cell_info_text_size">10.67sp</dimen>
+    <dimen name="cell_participants_text_size">8sp</dimen>
+    <dimen name="trash_size">20dp</dimen>
+    <dimen name="toast_text_size">10.67sp</dimen>
+    <dimen name="form_title_size">14.67sp</dimen>
+    <dimen name="edit_text_height">26.67dp</dimen>
+    <dimen name="edit_text_text_size">10sp</dimen>
+    <dimen name="form_button_size">26.67dp</dimen>
+    <dimen name="back_button_size">26.67dp</dimen>
+    <dimen name="tool_bar_button_size">13.33dp</dimen>
+
+</resources>

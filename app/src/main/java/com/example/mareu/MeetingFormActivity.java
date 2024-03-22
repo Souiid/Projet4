@@ -93,8 +93,8 @@ public class MeetingFormActivity extends AppCompatActivity {
     }
 
     private void setUpSpinner(List<String> places) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, places);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, places);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Pour le layout du dropdown
         binding.spinner.setAdapter(adapter);
         binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

@@ -20,13 +20,14 @@
             android:layout_height="wrap_content"
             android:text="MaReu"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/toolbar_title_size"
             android:textStyle="bold"/>
 
         <ImageButton
             android:id="@+id/sortButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/tool_bar_button_size"
+            android:layout_height="@dimen/tool_bar_button_size"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_sort"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_gravity="end"
@@ -58,49 +59,51 @@
             android:layout_height="wrap_content"
             android:text="Trier par: "
             android:textColor="@color/blue"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/sort_button_text_size"/>
 
         <Button
             android:id="@+id/sortByDateButton"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/sort_button_height"
             android:background="@color/white"
             android:textColor="@color/blue"
             android:text="Date"
-            android:textSize="16sp"
+            android:textSize="@dimen/sort_button_text_size"
             android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/sortByPlaceButton"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/sort_button_height"
             android:background="@color/white"
             android:textColor="@color/blue"
             android:text="Salle"
-            android:textSize="16sp"
+            android:textSize="@dimen/sort_button_text_size"
             android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/sortByTopicButton"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/sort_button_height"
             android:background="@color/white"
             android:textColor="@color/blue"
             android:text="Sujet"
-            android:textSize="16sp"
+            android:textSize="@dimen/sort_button_text_size"
             android:textAllCaps="false"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/add_button_size"
+        android:layout_height="@dimen/add_button_size"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="30dp"
         android:layout_marginEnd="20dp"
-        android:drawableStart="@drawable/ic_add"
-        android:padding="12dp"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="@dimen/add_button_text_size"
         android:background="@drawable/rounded_button"/>
 
 </RelativeLayout>

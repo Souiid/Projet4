@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Thème AppCompat personnalisé -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+
+        <item name="android:statusBarColor">@color/darkBlue</item>
+        <item name="android:navigationBarColor">@color/darkBlue</item>
+
+    </style>
+
+</resources>
