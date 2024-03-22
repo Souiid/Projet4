@@ -14,6 +14,7 @@
         android:background="@color/blue"
         android:elevation="4dp">
 
+        <!-- Titre de la Toolbar -->
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -23,6 +24,7 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
 
+        <!-- Bouton de la Toolbar -->
         <ImageButton
             android:id="@+id/sortButton"
             android:layout_width="wrap_content"

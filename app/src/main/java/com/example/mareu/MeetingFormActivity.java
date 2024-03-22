@@ -4,23 +4,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.mareu.databinding.ActivityMeetingFormBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MeetingFormActivity extends AppCompatActivity {
 
@@ -42,24 +50,46 @@ public class MeetingFormActivity extends AppCompatActivity {
         addParticipant();
         selectDate();
         participants = new ArrayList<>();
-        setUpPlaces();
         validateMeeting();
+        setButtonsVisibility(View.INVISIBLE);
+        clickOnBackButton();
     }
 
-    private void setUpPlaces() {
-      List<String> places = new ArrayList<String>(
+    private void setUpPlaces(Date selectedDate) {
+        List<String> places = new ArrayList<String>(
                 Arrays.asList("Mario", "Luigi", "Waluigi", "Wario", "Bowser", "Peach", "Daisy", "Yoshi", "Donkey Kong", "Toad")
         );
         Intent intent = getIntent();
         if(intent.hasExtra("meetings")) {
             meetings = (List<Meeting>) intent.getSerializableExtra("meetings");
             assert meetings != null;
-            for (Meeting meeting: meetings) {
-                places.remove(meeting.getPlace());
+            for (Meeting meeting : meetings) {
+                long diffInMillies = Math.abs(meeting.getDate().getTime() - selectedDate.getTime());
+                long diffInMinutes = diffInMillies / (60 * 1000);
+                if (diffInMinutes < 45) {
+                    places.remove(meeting.getPlace());
+                }
             }
         }
         setUpSpinner(places);
-        selectedPlace = places.get(0);
+        if (!places.isEmpty()) {
+            selectedPlace = places.get(0);
+            setButtonsVisibility(View.VISIBLE);
+        }else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'à' HH'h'mm", Locale.FRENCH);
+                String lastMeetingDateString = dateFormat.format(meetings.get(meetings.size() - 1).getDate());
+                showToast("Il n'y a plus de salle disponible à cette heure ci:" + lastMeetingDateString);
+                setButtonsVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+
+    private void setButtonsVisibility(int visibility) {
+        binding.spinner.setVisibility(visibility);
+        binding.validateMeetingButton.setVisibility(visibility);
     }
 
     private void setUpSpinner(List<String> places) {
@@ -85,14 +115,18 @@ public class MeetingFormActivity extends AppCompatActivity {
                 if (participants.size() < 3) {
                     String participantMail = binding.participantET.getText().toString();
                     if (!isMail(participantMail)) {
-                        Toast.makeText(MeetingFormActivity.this, "Veuillez entrer un email valide", Toast.LENGTH_SHORT).show();
+                        showToast("Veuillez entrer un email valide");
                     }else {
+                        if (participants.contains(participantMail)) {
+                            showToast("Ce participant est déjà dans la liste");
+                            return;
+                        }
                         participants.add(participantMail);
                         binding.participantsTV.append("\n -" + participantMail);
                         binding.participantET.setText("");
                     }
                 }else {
-                    Toast.makeText(MeetingFormActivity.this, "Vous ne pouvez pas entrer plus de participants", Toast.LENGTH_SHORT).show();
+                    showToast("Vous ne pouvez pas entrer plus de participants");
                 }
             }
         });
@@ -124,7 +158,7 @@ public class MeetingFormActivity extends AppCompatActivity {
 
                                                 isDateSelected = true;
                                                 date = calendar.getTime();
-
+                                                setUpPlaces(date);
                                             }
                                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
                                 timePickerDialog.show();
@@ -142,17 +176,17 @@ public class MeetingFormActivity extends AppCompatActivity {
                 String topic = binding.topicET.getText().toString();
 
                 if (topic.trim().isEmpty()) {
-                    Toast.makeText(MeetingFormActivity.this, "Le sujet est vide", Toast.LENGTH_SHORT).show();
+                    showToast("Le sujet est vide");
                     return;
                 }
 
                 if (participants.size() == 0) {
-                    Toast.makeText(MeetingFormActivity.this, "Il faut au moins un participant", Toast.LENGTH_SHORT).show();
+                    showToast("Il faut au moins un participant\"");
                     return;
                 }
 
                 if (!isDateSelected) {
-                    Toast.makeText(MeetingFormActivity.this, "Il faut choisir une date", Toast.LENGTH_SHORT).show();
+                    showToast("Il faut choisir une date");
                     return;
                 }
 
@@ -166,6 +200,25 @@ public class MeetingFormActivity extends AppCompatActivity {
 
     }
 
+    private void clickOnBackButton() {
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    public void showToast(String message) {
+        LayoutInflater inflater = LayoutInflater.from(MeetingFormActivity.this);
+        View layout = inflater.inflate(R.layout.custom_toast, null);
+        TextView text = layout.findViewById(R.id.text);
+        text.setText(message);
+        Toast toast = new Toast(MeetingFormActivity.this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
 
 
     private Boolean isMail(String email) {

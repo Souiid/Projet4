@@ -79,7 +79,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         Meeting meeting = meetings.get(position);
         String topic = meeting.topic;
         Date date = meeting.date;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy 'à' HH'h'mm", Locale.FRENCH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'à' HH'h'mm", Locale.FRENCH);
         String hour = dateFormat.format(date);
         String place = meeting.place;
 

@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == 0 && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("newMeeting")) { // Utilisez "newMeeting" ici
                 Meeting meeting = (Meeting) data.getSerializableExtra("newMeeting"); // Utilisez "newMeeting" ici
-                Log.d("Meeting", meeting.place);
-                Log.d("Meeting", meeting.topic);
-                Log.d("Meeting", meeting.participants.get(0));
-                Log.d("Meeting", meeting.date.toString());
                 meetings.add(meeting);
                 adapter.setMeetings(meetings);
                 adapter.notifyDataSetChanged();
@@ -95,11 +91,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Meeting meeting1 = new Meeting("Réunion A", new Date(), "Peach", participants1);
         Meeting meeting2 = new Meeting("Réunion B",new Date(),"Mario", participants2);
         Meeting meeting3 = new Meeting("Réunion C", new Date(), "Luigi", participants3);
+        Meeting meeting10 = new Meeting("Réunion D", new Date(), "Waluigi", participants3);
+        Meeting meeting4 = new Meeting("Réunion E", new Date(), "Wario", participants3);
+        Meeting meeting5 = new Meeting("Réunion F", new Date(), "Bowser", participants3);
+        Meeting meeting6 = new Meeting("Réunion G", new Date(), "Daisy", participants3);
+        Meeting meeting7 = new Meeting("Réunion H", new Date(), "Yoshi", participants3);
+        Meeting meeting8 = new Meeting("Réunion I", new Date(), "Donkey Kong", participants3);
+        Meeting meeting9 = new Meeting("Réunion J", new Date(), "Toad", participants3);
 
 
         meetings.add(meeting1);
         meetings.add(meeting2);
         meetings.add(meeting3);
+        meetings.add(meeting4);
+        meetings.add(meeting5);
+        meetings.add(meeting6);
+        meetings.add(meeting7);
+        meetings.add(meeting8);
+        meetings.add(meeting9);
+        meetings.add(meeting10);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
         }
