@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.mareu.DI.DI;
 import com.example.mareu.databinding.ActivityMainBinding;
+import com.example.mareu.service.MeetingAPIService;
 
 
 import java.io.Serializable;
@@ -27,8 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ActivityMainBinding binding;
     List<Meeting> meetings = new ArrayList<>();
-    MeetingAdapter adapter = new MeetingAdapter(meetings, this);
+    MeetingAdapter adapter;
     Integer tapOnSort = 0;
+
+    MeetingAPIService apiService;
 
     ViewModel viewModel;
 
@@ -38,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.menuLinearLayout.setVisibility(View.INVISIBLE);
-        generateMeetings();
+        apiService = DI.getMeetingApiService();
+        meetings = apiService.getMeetings();
+        adapter = new MeetingAdapter(meetings, this);
         RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -47,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clickOnSortByDateButton();
         clickOnSortPlaceButton();
         clickOnSortByTopicButton();
-     //   viewModel = new ViewModelProvider(//        ViewModelProvider.AndroidViewModelFactory.getInstance().create(MainViewModel.class);
 
     }
 
@@ -73,58 +78,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            if (data != null && data.hasExtra("newMeeting")) { // Utilisez "newMeeting" ici
-                Meeting meeting = (Meeting) data.getSerializableExtra("newMeeting"); // Utilisez "newMeeting" ici
+            if (data != null && data.hasExtra("newMeeting")) {
+                Meeting meeting = (Meeting) data.getSerializableExtra("newMeeting");
                 meetings.add(meeting);
                 adapter.setMeetings(meetings);
                 adapter.notifyDataSetChanged();
             }
         }
     }
-
-    private void generateMeetings() {
-        // Ajoutez des éléments à la liste selon vos besoins
-        List<String> participants1 = generateParticipants("maxime@lamzone.fr", "alex@lamzone.fr", "gerald@lamzone.fr");
-        List<String> participants2 = generateParticipants("stanlay@lamzone.fr", "idriss@lamzone.fr", "david@lamzone.fr");
-        List<String> participants3 = generateParticipants("theo@lamzone.fr", "sacha@lamzone.fr", "remy@lamzone.fr");
-
-        Meeting meeting1 = new Meeting("Réunion A", new Date(), "Peach", participants1);
-        Meeting meeting2 = new Meeting("Réunion B",new Date(),"Mario", participants2);
-        Meeting meeting3 = new Meeting("Réunion C", new Date(), "Luigi", participants3);
-        Meeting meeting10 = new Meeting("Réunion D", new Date(), "Waluigi", participants3);
-        Meeting meeting4 = new Meeting("Réunion E", new Date(), "Wario", participants3);
-        Meeting meeting5 = new Meeting("Réunion F", new Date(), "Bowser", participants3);
-        Meeting meeting6 = new Meeting("Réunion G", new Date(), "Daisy", participants3);
-        Meeting meeting7 = new Meeting("Réunion H", new Date(), "Yoshi", participants3);
-        Meeting meeting8 = new Meeting("Réunion I", new Date(), "Donkey Kong", participants3);
-        Meeting meeting9 = new Meeting("Réunion J", new Date(), "Toad", participants3);
-
-
-        meetings.add(meeting1);
-        meetings.add(meeting2);
-        meetings.add(meeting3);
-        meetings.add(meeting4);
-        meetings.add(meeting5);
-        meetings.add(meeting6);
-        meetings.add(meeting7);
-        meetings.add(meeting8);
-        meetings.add(meeting9);
-        meetings.add(meeting10);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(meetings, Comparator.comparing(Meeting::getDate));
-        }
-
-    }
-
-    private List<String> generateParticipants(String mail1, String mail2, String mail3) {
-        List<String> participants = new ArrayList<>();
-        participants.add(mail1);
-        participants.add(mail2);
-        participants.add(mail3);
-        return participants;
-    }
-
 
     private void clickOnSortByDateButton() {
         binding.sortByDateButton.setOnClickListener(new View.OnClickListener() {
