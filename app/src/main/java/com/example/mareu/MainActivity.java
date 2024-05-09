@@ -31,9 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<Meeting> meetings = new ArrayList<>();
     MeetingAdapter adapter;
     Integer tapOnSort = 0;
-
     MeetingAPIService apiService;
-
     ViewModel viewModel;
 
     @Override

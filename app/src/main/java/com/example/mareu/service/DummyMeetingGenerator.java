@@ -21,13 +21,12 @@ public abstract class DummyMeetingGenerator {
        new Meeting("Réunion H", generateDate(10, 0), "Yoshi", new ArrayList<>(Arrays.asList("stephanie@lamzone.fr", "elisa@lamzone.fr", "jin@lamzone.fr"))),
        new Meeting("Réunion I", generateDate(10, 30), "Donkey Kong", new ArrayList<>(Arrays.asList("jimmy@lamzone.fr", "raphaelle@lamzone.fr"))),
        new Meeting("Réunion J", generateDate(9, 30), "Toad", new ArrayList<>(Arrays.asList("bilal@lamzone.fr", "quentin@lamzone.fr", "omar@lamzone.fr")))
-
     );
 
     static List<Meeting> generateMeetings() {
         return new ArrayList<>(DUMMY_MEETINGS);
     }
-    static Date generateDate(int hour, int minute) {
+    private static Date generateDate(int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2024, Calendar.APRIL, 20, hour, minute);
         return calendar.getTime();
