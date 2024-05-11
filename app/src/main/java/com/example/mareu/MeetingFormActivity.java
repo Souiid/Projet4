@@ -41,7 +41,6 @@ public class MeetingFormActivity extends AppCompatActivity {
     List<Meeting> meetings = new ArrayList<>();
     Boolean isDateSelected = false;
     String selectedPlace;
-
     private MeetingFormViewModel viewModel;
 
 
@@ -109,7 +108,6 @@ public class MeetingFormActivity extends AppCompatActivity {
         });
     }
 
-
     private void addParticipant() {
         binding.addParticipantButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +173,6 @@ public class MeetingFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String topic = binding.topicET.getText().toString();
-
                 String errorString = viewModel.getFormError(topic, participants, isDateSelected);
 
                 if (errorString != null) {
@@ -183,9 +180,6 @@ public class MeetingFormActivity extends AppCompatActivity {
                 } else {
                     Meeting meeting = new Meeting(topic, date, selectedPlace, participants);
                     viewModel.addMeeting(meeting);
-                    // Intent returnIntent = new Intent();
-                    // returnIntent.putExtra("newMeeting", meeting);
-                    // setResult(RESULT_OK, returnIntent);
                     finish();
                 }
             }

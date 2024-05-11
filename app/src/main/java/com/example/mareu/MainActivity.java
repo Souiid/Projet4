@@ -74,20 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            if (data != null && data.hasExtra("newMeeting")) {
-                Meeting meeting = (Meeting) data.getSerializableExtra("newMeeting");
-                meetings.add(meeting);
-                adapter.setMeetings(meetings);
-                adapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         adapter.setMeetings(meetings);

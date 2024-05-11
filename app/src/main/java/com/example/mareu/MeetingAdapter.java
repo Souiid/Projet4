@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mareu.repositories.PlaceRepository;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.text.SimpleDateFormat;
@@ -86,11 +87,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         String participantsString = TextUtils.join(", ", meeting.participants);
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setShape(GradientDrawable.OVAL);
-        gradientDrawable.setColor(ContextCompat.getColor(holder.context, setColorByPlace(place)));
+        int color = new PlaceRepository().setColorByPlace(place);
+        gradientDrawable.setColor(ContextCompat.getColor(holder.context, color));
         holder.imageView.setBackground(gradientDrawable);
         holder.infosTV.setText(place + "-" + hour + "-" + topic);
         holder.participantsTV.setText(participantsString);
-        Log.d("TAG", "PARITICIPANTS: " + participantsString);
         holder.cardView.setTag(position);
         holder.cardView.setOnClickListener(itemClickListener);
     }
@@ -117,45 +118,4 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         notifyItemRangeChanged(position, getItemCount());
     }
 
-    @SuppressLint("ResourceAsColor")
-    private int setColorByPlace(String place) {
-        int color;
-
-        switch (place) {
-            case "Mario":
-                color = R.color.red;
-                break;
-            case "Luigi":
-                color = R.color.green;
-                break;
-            case "Waluigi":
-                color = R.color.purple;
-                break;
-            case "Wario":
-                color = R.color.yellow;
-                break;
-            case "Bowser":
-                color = R.color.black;
-                break;
-            case "Peach":
-                color = R.color.pink;
-                break;
-            case "Daisy":
-                color = R.color.blue;
-                break;
-            case "Yoshi":
-                color = R.color.lightGray;
-                break;
-            case "Donkey Kong":
-                color = R.color.darkBlue;
-                break;
-            case "Toad":
-                color = R.color.orange;
-                break;
-            default:
-                color = R.color.red;
-        }
-
-        return color;
-    }
 }
