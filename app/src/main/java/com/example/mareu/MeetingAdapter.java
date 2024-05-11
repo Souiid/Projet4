@@ -112,6 +112,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         }
     }
 
+    public void notifyChanged(int position) {
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
+    }
+
     @SuppressLint("ResourceAsColor")
     private int setColorByPlace(String place) {
         int color;

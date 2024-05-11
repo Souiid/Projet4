@@ -182,9 +182,10 @@ public class MeetingFormActivity extends AppCompatActivity {
                     showToast(errorString);
                 } else {
                     Meeting meeting = new Meeting(topic, date, selectedPlace, participants);
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("newMeeting", meeting);
-                    setResult(RESULT_OK, returnIntent);
+                    viewModel.addMeeting(meeting);
+                    // Intent returnIntent = new Intent();
+                    // returnIntent.putExtra("newMeeting", meeting);
+                    // setResult(RESULT_OK, returnIntent);
                     finish();
                 }
             }

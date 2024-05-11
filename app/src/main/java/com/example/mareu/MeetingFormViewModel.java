@@ -2,6 +2,8 @@ package com.example.mareu;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.mareu.repositories.MeetingRepository;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -9,6 +11,7 @@ import java.util.List;
 
 public class MeetingFormViewModel extends ViewModel {
 
+    MeetingRepository meetingRepository = new MeetingRepository();
 
      String getFormError(String topic, List<String> participants, Boolean isDateSelected) {
          String message = null;
@@ -43,6 +46,10 @@ public class MeetingFormViewModel extends ViewModel {
             }
         }
         return places;
+    }
+
+    void addMeeting(Meeting meeting) {
+         meetingRepository.addMeeting(meeting);
     }
 
 }

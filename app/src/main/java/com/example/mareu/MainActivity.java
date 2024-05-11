@@ -2,6 +2,7 @@ package com.example.mareu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,17 +32,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<Meeting> meetings = new ArrayList<>();
     MeetingAdapter adapter;
     Integer tapOnSort = 0;
-    MeetingAPIService apiService;
-    ViewModel viewModel;
+    MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+        viewModel = viewModelProvider.get(MainViewModel.class);
+
         binding.menuLinearLayout.setVisibility(View.INVISIBLE);
-        apiService = DI.getMeetingApiService();
-        meetings = apiService.getMeetings();
+        meetings = viewModel.meetings;
         adapter = new MeetingAdapter(meetings, this);
         RecyclerView recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -83,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.setMeetings(meetings);
+        adapter.notifyDataSetChanged();
+
+
     }
 
     private void clickOnSortByDateButton() {
@@ -146,11 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Object tagObject = view.getTag();
-
         if (tagObject instanceof Integer) {
             int position = (int) tagObject;
-            adapter.removeMeeting(position);
+              viewModel.deleteMeeting(meetings.get(position));
+              adapter.notifyChanged(position);
         }
     }
-
 }
