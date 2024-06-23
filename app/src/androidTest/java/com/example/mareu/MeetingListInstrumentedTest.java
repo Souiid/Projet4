@@ -22,10 +22,12 @@ import android.widget.TimePicker;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,8 +37,14 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
+import com.example.mareu.DI.DI;
+import com.example.mareu.repositories.MeetingRepository;
+import com.example.mareu.service.MeetingAPIService;
 import com.example.mareu.utils.DeleteViewAction;
 import com.example.mareu.utils.RecyclerViewItemCountAssertion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -46,18 +54,37 @@ import com.example.mareu.utils.RecyclerViewItemCountAssertion;
 @RunWith(AndroidJUnit4.class)
 public class MeetingListInstrumentedTest {
 
+
+    private List<Meeting> initialMeetings;
+
     private static int ITEMS_COUNT = 10;
 
     private MainActivity mActivity;
 
+
+
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule(MainActivity.class);
+    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(MainActivity.class);
+
 
     @Before
     public void setUp() {
-        mActivity = mActivityRule.getActivity();
-        assertThat(mActivity, notNullValue());
+        mActivityScenarioRule.getScenario().onActivity(activity -> {
+            assertThat(activity, notNullValue());
+        });
+        initialMeetings = new ArrayList<>(DI.getMeetingApiService().getMeetings());
+
+    }
+
+    @After
+    public void tearDown() {
+        MeetingAPIService apiService = DI.getMeetingApiService();
+        apiService.getMeetings().clear();
+
+        for (Meeting meeting : initialMeetings) {
+            apiService.addMeeting(meeting);
+        }
     }
 
     @Test
@@ -66,6 +93,8 @@ public class MeetingListInstrumentedTest {
         onView(allOf(withId(R.id.recyclerView), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
+
+
 
     @Test
     public void myMeetingList_deleteAction_shouldRemoveItem() {

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="MeetingListInstrumentedTest">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
@@ -12,9 +15,6 @@
         <State />
       </entry>
       <entry key="myMeetingList_deleteAction_shouldRemoveItem()">
-        <State />
-      </entry>
-      <entry key="myMeetingList_shouldNotBeEmpty()">
         <State />
       </entry>
     </value>
