@@ -3,12 +3,15 @@ package com.example.mareu.DI;
 import com.example.mareu.service.DummyMeetingApiService;
 import com.example.mareu.service.MeetingAPIService;
 
+/**
+ * Dependency injection.
+ */
 public class DI {
 
-    private static MeetingAPIService service = new DummyMeetingApiService();
+    private static final MeetingAPIService meetingAPIService = new DummyMeetingApiService();
 
     public static MeetingAPIService getMeetingApiService() {
-        return service;
+        return meetingAPIService;
     }
 
     public static MeetingAPIService getNewInstanceApiService() {

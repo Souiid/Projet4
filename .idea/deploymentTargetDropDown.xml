@@ -5,6 +5,18 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="myAddButton_clickAction_shouldDisplayMeetingForm()">
+        <State />
+      </entry>
+      <entry key="myMeetingList_ShowsAnotherMeetingAfterAdd()">
+        <State />
+      </entry>
+      <entry key="myMeetingList_deleteAction_shouldRemoveItem()">
+        <State />
+      </entry>
+      <entry key="myMeetingList_shouldNotBeEmpty()">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

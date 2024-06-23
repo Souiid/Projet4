@@ -32,6 +32,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity to create a meeting..
+ */
 public class MeetingFormActivity extends AppCompatActivity {
 
     ActivityMeetingFormBinding binding;
@@ -50,11 +53,8 @@ public class MeetingFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meeting_form);
         binding = ActivityMeetingFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         ViewModelProvider viewModelProvider = new ViewModelProvider(this);
-
         viewModel = viewModelProvider.get(MeetingFormViewModel.class);
-
         addParticipant();
         selectDate();
         participants = new ArrayList<>();
@@ -63,6 +63,9 @@ public class MeetingFormActivity extends AppCompatActivity {
         clickOnBackButton();
     }
 
+    /**
+     * Show availble rooms in spinner to create a meeting
+     */
     private void setUpPlaces(Date selectedDate) {
 
         Intent intent = getIntent();
@@ -92,6 +95,9 @@ public class MeetingFormActivity extends AppCompatActivity {
         binding.validateMeetingButton.setVisibility(visibility);
     }
 
+    /**
+     * Set up spinner with all rooms
+     */
     private void setUpSpinner(List<String> places) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, places);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -108,6 +114,9 @@ public class MeetingFormActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Add participant to meeting and display it in textview
+     */
     private void addParticipant() {
         binding.addParticipantButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +143,9 @@ public class MeetingFormActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Display a dialog with date to set up it for the meeting creation
+     */
     private void selectDate() {
         binding.chooseDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +179,9 @@ public class MeetingFormActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Validate a meeting to add it in the meeting list and come back
+     */
     private void validateMeeting() {
         binding.validateMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override

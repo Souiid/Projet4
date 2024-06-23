@@ -1,29 +1,19 @@
 package com.example.mareu;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
-
-import com.example.mareu.DI.DI;
 import com.example.mareu.databinding.ActivityMainBinding;
-import com.example.mareu.service.MeetingAPIService;
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActivityMainBinding binding;
     List<Meeting> meetings = new ArrayList<>();
     MeetingAdapter adapter;
-    Integer tapOnSort = 0;
     MainViewModel viewModel;
 
     @Override
@@ -41,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(binding.getRoot());
         ViewModelProvider viewModelProvider = new ViewModelProvider(this);
         viewModel = viewModelProvider.get(MainViewModel.class);
-
         binding.menuLinearLayout.setVisibility(View.INVISIBLE);
         meetings = viewModel.meetings;
         adapter = new MeetingAdapter(meetings, this);
@@ -53,12 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clickOnSortByDateButton();
         clickOnSortPlaceButton();
         clickOnSortByTopicButton();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-      //  getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
 
@@ -78,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         adapter.setMeetings(meetings);
         adapter.notifyDataSetChanged();
-
-
     }
 
     private void clickOnSortByDateButton() {

@@ -3,6 +3,7 @@ package com.example.mareu;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mareu.repositories.MeetingRepository;
+import com.example.mareu.repositories.PlaceRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,10 @@ public class MeetingFormViewModel extends ViewModel {
 
     MeetingRepository meetingRepository = new MeetingRepository();
 
+    /**
+     * Manage meeting form error
+     * @return an error string
+     */
      String getFormError(String topic, List<String> participants, Boolean isDateSelected) {
          String message = null;
 
@@ -30,14 +35,16 @@ public class MeetingFormViewModel extends ViewModel {
         return message;
     }
 
+    /**
+     * Verify if an entry is an email
+     * @return a boolean
+     */
      Boolean isMail(String email) {
         return email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$");
     }
 
     List<String> setUpPlaces(List<Meeting> meetings, Date selectedDate) {
-        List<String> places = new ArrayList<String>(
-                Arrays.asList("Mario", "Luigi", "Waluigi", "Wario", "Bowser", "Peach", "Daisy", "Yoshi", "Donkey Kong", "Toad")
-        );
+        List<String> places =  new PlaceRepository().places;
         for (Meeting meeting : meetings) {
             long diffInMillies = Math.abs(meeting.getDate().getTime() - selectedDate.getTime());
             long diffInMinutes = diffInMillies / (60 * 1000);
@@ -48,6 +55,9 @@ public class MeetingFormViewModel extends ViewModel {
         return places;
     }
 
+    /**
+     * Add meeting to the meetings list
+     */
     void addMeeting(Meeting meeting) {
          meetingRepository.addMeeting(meeting);
     }

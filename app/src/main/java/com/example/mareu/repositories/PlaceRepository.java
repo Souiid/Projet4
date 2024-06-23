@@ -2,22 +2,28 @@ package com.example.mareu.repositories;
 
 import android.annotation.SuppressLint;
 
-import com.example.mareu.Meeting;
 import com.example.mareu.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class manage the data of room.
+ */
 public class PlaceRepository {
-    List<String> places = new ArrayList<String>(
+    public List<String> places = new ArrayList<String>(
             Arrays.asList("Mario", "Luigi", "Waluigi", "Wario", "Bowser", "Peach", "Daisy", "Yoshi", "Donkey Kong", "Toad")
     );
 
+    /**
+     * Return a color according to meeting room.
+     *
+     * @return a int color (ressources).
+     */
     @SuppressLint("ResourceAsColor")
-    public int setColorByPlace(String place) {
+    public int getPlaceColor(String place) {
         int color;
-
         switch (place) {
             case "Mario":
                 color = R.color.red;

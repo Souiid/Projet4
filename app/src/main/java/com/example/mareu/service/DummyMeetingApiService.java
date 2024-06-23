@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class DummyMeetingApiService implements  MeetingAPIService {
 
-    private List<Meeting> meetings = DummyMeetingGenerator.generateMeetings();
+    private final List<Meeting> meetings = DummyMeetingGenerator.generateMeetings();
 
     @Override
     public List<Meeting> getMeetings() {

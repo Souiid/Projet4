@@ -87,6 +87,7 @@ public class MeetingListInstrumentedTest {
         onView(allOf(withId(R.id.addButton))).perform(click());
         onView(withId(R.id.topicET)).perform(typeText("Reunion Test"), closeSoftKeyboard());
         onView(withId(R.id.participantET)).perform(typeText("johndoe@mail.com"), closeSoftKeyboard());
+        onView(allOf(withId(R.id.addParticipantButton))).perform(click());
         onView(allOf(withId(R.id.chooseDateButton))).perform(click());
         onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2024, 5, 20));
         onView(withId(android.R.id.button1)).perform(click());
