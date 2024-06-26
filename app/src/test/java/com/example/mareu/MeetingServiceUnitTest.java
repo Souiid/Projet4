@@ -15,20 +15,26 @@ import com.example.mareu.service.MeetingAPIService;
 import java.util.List;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Unit tests for the MeetingAPIService.
+ * These tests ensure that the MeetingAPIService methods work correctly.
  */
 @RunWith(JUnit4.class)
 public class MeetingServiceUnitTest {
 
     private MeetingAPIService service;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes the MeetingAPIService with a new instance.
+     */
     @Before
     public void setup() {
         service = DI.getNewInstanceApiService();
     }
 
+    /**
+     * Tests that the getMeetings method returns the expected list of meetings.
+     */
     @Test
     public void getMeetingsWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
@@ -36,15 +42,21 @@ public class MeetingServiceUnitTest {
         assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeetings.toArray()));
     }
 
+    /**
+     * Tests that the deleteMeeting method successfully deletes a meeting.
+     */
     @Test
-    public void deleteNeighbourWithSuccess() {
+    public void deleteMeetingWithSuccess() {
         Meeting meetingToDelete = service.getMeetings().get(0);
         service.deleteMeeting(meetingToDelete);
         assertFalse(service.getMeetings().contains(meetingToDelete));
     }
 
+    /**
+     * Tests that the addMeeting method successfully adds a new meeting.
+     */
     @Test
-    public void addNeighbourWithSuccess() {
+    public void addMeetingWithSuccess() {
         List<Meeting> meetings = service.getMeetings();
         int meetingsSize = meetings.size();
         Meeting newMeeting = meetings.get(0);

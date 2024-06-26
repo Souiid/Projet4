@@ -46,11 +46,7 @@ import com.example.mareu.utils.RecyclerViewItemCountAssertion;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
+
 @RunWith(AndroidJUnit4.class)
 public class MeetingListInstrumentedTest {
 
@@ -68,6 +64,9 @@ public class MeetingListInstrumentedTest {
             new ActivityScenarioRule<>(MainActivity.class);
 
 
+    /**
+     * Sets up the initial state for each test, including getting the activity and initial meetings.
+     */
     @Before
     public void setUp() {
         mActivityScenarioRule.getScenario().onActivity(activity -> {
@@ -77,6 +76,9 @@ public class MeetingListInstrumentedTest {
 
     }
 
+    /**
+     * Cleans up the state after each test by restoring the initial meetings.
+     */
     @After
     public void tearDown() {
         MeetingAPIService apiService = DI.getMeetingApiService();
@@ -87,6 +89,9 @@ public class MeetingListInstrumentedTest {
         }
     }
 
+    /**
+     * Tests that the meeting list is not empty.
+     */
     @Test
     public void myMeetingList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
@@ -94,8 +99,9 @@ public class MeetingListInstrumentedTest {
                 .check(matches(hasMinimumChildCount(1)));
     }
 
-
-
+    /**
+     * Tests that deleting a meeting removes it from the list.
+     */
     @Test
     public void myMeetingList_deleteAction_shouldRemoveItem() {
         onView(allOf(withId(R.id.recyclerView), isDisplayed())).check((ViewAssertion) withItemCount(ITEMS_COUNT));
@@ -104,6 +110,9 @@ public class MeetingListInstrumentedTest {
         onView(allOf(withId(R.id.recyclerView), isDisplayed())).check((ViewAssertion) withItemCount(ITEMS_COUNT - 1));
     }
 
+    /**
+     * Tests that clicking the add button displays the meeting form.
+     */
     @Test
     public void myAddButton_clickAction_shouldDisplayMeetingForm() {
         onView(allOf(withId(R.id.addButton), isDisplayed()))
@@ -111,6 +120,9 @@ public class MeetingListInstrumentedTest {
         onView(withId(R.id.meeting_form)).check(matches(isDisplayed()));
     }
 
+    /**
+     * Tests that adding a new meeting increases the list size.
+     */
     @Test
     public void myMeetingList_ShowsAnotherMeetingAfterAdd() {
         onView(allOf(withId(R.id.addButton))).perform(click());
@@ -126,6 +138,9 @@ public class MeetingListInstrumentedTest {
         onView(allOf(withId(R.id.recyclerView), isDisplayed())).check(RecyclerViewItemCountAssertion.withItemCount(ITEMS_COUNT + 1));
     }
 
+    /**
+     * Tests that the app context is correctly set.
+     */
     @Test
     public void useAppContext() {
         // Context of the app under test.

@@ -23,18 +23,28 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * This class is an adapter and viewholder to manage the display of meetings in a list ..
+ * MeetingAdapter is a RecyclerView.Adapter that binds meeting data to views that are displayed
+ * within a RecyclerView.
  */
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder>{
 
     private List<Meeting> meetings;
     private View.OnClickListener itemClickListener;
 
+    /**
+     * Constructs a new MeetingAdapter with the specified list of meetings and click listener.
+     *
+     * @param meetings The list of meetings to display.
+     * @param itemClickListener The click listener for handling item clicks.
+     */
     public MeetingAdapter(List<Meeting> meetings, View.OnClickListener itemClickListener) {
         this.meetings = meetings;
         this.itemClickListener = itemClickListener;
     }
 
+    /**
+     * ViewHolder is a nested class that holds the views for each item in the RecyclerView.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView imageView;
@@ -43,6 +53,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         private Context context;
 
 
+        /**
+         * Constructs a new ViewHolder and sets up the click listener for the CardView.
+         *
+         * @param itemView The view of the item.
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
@@ -62,6 +77,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             });
         }
     }
+
+    /**
+     * Called when RecyclerView needs a new ViewHolder of the given type to represent an item.
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new ViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,6 +94,13 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         return new ViewHolder(itemView);
     }
 
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     * This method should update the contents of the ViewHolder's itemView to reflect the item at the given position.
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the item at the given position.
+     * @param position The position of the item within the adapter's data set.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -93,10 +123,21 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         holder.cardView.setOnClickListener(itemClickListener);
     }
 
+    /**
+     * Sets the list of meetings for the adapter.
+     *
+     * @param meetings The new list of meetings.
+     */
     public void setMeetings(List<Meeting> meetings) {
         this.meetings = meetings;
     }
 
+
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     */
     @Override
     public int getItemCount() {
         return meetings.size();
@@ -110,6 +151,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         }
     }
 
+    /**
+     * Notifies that an item has been removed and the range of items has changed.
+     *
+     * @param position The position of the item that was removed.
+     */
     public void notifyChanged(int position) {
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getItemCount());

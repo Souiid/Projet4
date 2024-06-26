@@ -16,6 +16,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * MainActivity is the main entry point of the application, displaying a list of meetings.
+ * It provides functionality to add, sort, and manage meetings.
+ * This activity uses ViewModel to manage UI-related data in a lifecycle-conscious way.
+ *
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityMainBinding binding;
@@ -23,6 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MeetingAdapter adapter;
     MainViewModel viewModel;
 
+
+    /**
+     * Called when the activity is first created.
+     * Initializes the view binding, view model, RecyclerView, and sets up various UI components.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle).
+     *                           Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +59,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clickOnSortByTopicButton();
     }
 
+    /**
+     * Called to initialize the contents of the Activity's standard options menu.
+     *
+     * @param menu The options menu in which you place your items.
+     * @return true for the menu to be displayed; false if it should not be shown.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
 
+    /**
+     * Sets up the click listener for the "Add" button to open the MeetingFormActivity.
+     */
     private void clickOnAddButton() {
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * Called when the activity is resumed.
+     * Updates the adapter with the current list of meetings.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -66,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Sets up the click listener for sorting meetings by date.
+     */
     private void clickOnSortByDateButton() {
         binding.sortByDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * Sets up the click listener for sorting meetings by place.
+     */
     private void clickOnSortPlaceButton() {
         binding.sortByPlaceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +129,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * Sets up the click listener for sorting meetings by topic.
+     */
     private void clickOnSortByTopicButton() {
         binding.sortByTopicButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +146,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * Sets up the click listener for displaying or hiding the sort menu.
+     */
     private void clickOnSortButton() {
         binding.sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * Handles click events for the views in the RecyclerView items.
+     *
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         Object tagObject = view.getTag();

@@ -33,7 +33,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Activity to create a meeting..
+ * MeetingFormActivity is an activity that provides a form for creating a new meeting.
+ * This activity allows users to select a date and time, choose a meeting room, add participants,
+ * and validate the meeting details.
+ *
+ * Extends: AppCompatActivity
  */
 public class MeetingFormActivity extends AppCompatActivity {
 
@@ -47,6 +51,15 @@ public class MeetingFormActivity extends AppCompatActivity {
     private MeetingFormViewModel viewModel;
 
 
+    /**
+     * Called when the activity is first created.
+     * Initializes the view binding, view model, and sets up various UI components.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle).
+     *                           Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +77,12 @@ public class MeetingFormActivity extends AppCompatActivity {
     }
 
     /**
-     * Show availble rooms in spinner to create a meeting
+     * Shows available rooms in a spinner to create a meeting.
+     *
+     * @param selectedDate The date selected for the meeting.
      */
-    private void setUpPlaces(Date selectedDate) {
 
+    private void setUpPlaces(Date selectedDate) {
         Intent intent = getIntent();
         if (intent.hasExtra("meetings")) {
             meetings = (List<Meeting>) intent.getSerializableExtra("meetings");
@@ -90,13 +105,20 @@ public class MeetingFormActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Sets the visibility of the buttons related to meeting creation.
+     *
+     * @param visibility The visibility state to be set.
+     */
     private void setButtonsVisibility(int visibility) {
         binding.spinner.setVisibility(visibility);
         binding.validateMeetingButton.setVisibility(visibility);
     }
 
     /**
-     * Set up spinner with all rooms
+     * Sets up the spinner with all available rooms.
+     *
+     * @param places A list of available rooms.
      */
     private void setUpSpinner(List<String> places) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, places);
@@ -115,7 +137,7 @@ public class MeetingFormActivity extends AppCompatActivity {
     }
 
     /**
-     * Add participant to meeting and display it in textview
+     * Adds a participant to the meeting and displays it in a TextView.
      */
     private void addParticipant() {
         binding.addParticipantButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +166,7 @@ public class MeetingFormActivity extends AppCompatActivity {
     }
 
     /**
-     * Display a dialog with date to set up it for the meeting creation
+     * Displays a dialog to select the date and time for the meeting creation.
      */
     private void selectDate() {
         binding.chooseDateButton.setOnClickListener(new View.OnClickListener() {
@@ -179,8 +201,10 @@ public class MeetingFormActivity extends AppCompatActivity {
         });
     }
 
+
     /**
-     * Validate a meeting to add it in the meeting list and come back
+     * Validates the meeting details and adds it to the meeting list.
+     * Displays appropriate error messages if the validation fails.
      */
     private void validateMeeting() {
         binding.validateMeetingButton.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +225,10 @@ public class MeetingFormActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Handles the back button click event.
+     * Finishes the activity.
+     */
     private void clickOnBackButton() {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,6 +238,12 @@ public class MeetingFormActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Shows a custom toast message.
+     *
+     * @param message The message to be displayed in the toast.
+     */
     public void showToast(String message) {
         LayoutInflater inflater = LayoutInflater.from(MeetingFormActivity.this);
         View layout = inflater.inflate(R.layout.custom_toast, null);
